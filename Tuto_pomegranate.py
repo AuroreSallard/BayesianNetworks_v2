@@ -93,9 +93,9 @@ work_sampled = [s[2] for s in S]
 df_sampled = pd.DataFrame.from_dict({"age_class": age_class_sampled, "Sex": sex_sampled, "Work_time": work_sampled})
 
 # Plot the graph into a PDF. 
-model.plot("BNtry01.pdf")
+#model.plot("BNtry01.pdf")
 
-# Check if the distribution of sociodem is the same in the data and in the samples
+# Check if the distribution of sociodem is the same in the data and in the samples. From the 3 examples below it seems to be fine!
 is_female = np.array(X["Sex"] == "Female")
 W = np.array(W)
 X_female = np.sum(W[is_female]) / np.sum(W)
