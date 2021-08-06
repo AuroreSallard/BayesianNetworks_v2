@@ -86,7 +86,7 @@ model = BayesianNetwork.from_samples(X, algorithm = "exact", weights = W, state_
 model.bake()
 
 # Sample using the function above
-S = sample_from_BN(model, 1000000)
+S = sample_from_BN(model, 10000)
 age_class_sampled = [s[0] for s in S]
 sex_sampled = [s[1] for s in S]
 work_sampled = [s[2] for s in S]
@@ -112,3 +112,34 @@ X_female = np.sum(W[is_retired]) / np.sum(W)
 S_female = len(df_sampled[df_sampled["Work_time"] == "Houseperson"]) / len(df_sampled)
 print("Houseperson: " + str(X_female) + " vs " + str(S_female))
 
+# Try to modify the distribution of one node, let's say gender - we want to sample only women.
+new_gender_dist = DiscreteDistribution({"Female": 1.0, "Male": 0.0})
+
+for s in model.states:
+    print(s.name)
+    if s.name == "Sex":
+        s.distribution = new_gender_dist
+
+model2 = model.copy()
+
+S2 = sample_from_BN(model2, 100000)
+age_class_sampled = [s[0] for s in S2]
+sex_sampled = [s[1] for s in S2]
+work_sampled = [s[2] for s in S2]
+df_sampled2 = pd.DataFrame.from_dict({"age_class": age_class_sampled, "Sex": sex_sampled, "Work_time": work_sampled})
+
+is_female = np.array(X["Sex"] == "Female")
+W = np.array(W)
+S_female = len(df_sampled2[df_sampled2["Sex"] == "Female"]) / len(df_sampled2)   
+X_female = np.sum(W[is_female]) / np.sum(W)     
+print("Female: " + str(X_female) + " vs " + str(S_female))
+
+is_retired = np.array(X["Work_time"] == "Retired")
+X_female = np.sum(W[is_retired]) / np.sum(W)
+S_female = len(df_sampled2[df_sampled2["Work_time"] == "Retired"]) / len(df_sampled2)
+print("Retired: " + str(X_female) + " vs " + str(S_female))
+
+is_retired = np.array(X["Work_time"] == "Houseperson")
+X_female = np.sum(W[is_retired]) / np.sum(W)
+S_female = len(df_sampled2[df_sampled2["Work_time"] == "Houseperson"]) / len(df_sampled2)
+print("Houseperson: " + str(X_female) + " vs " + str(S_female))
