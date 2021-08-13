@@ -2,13 +2,13 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
-bn_chains = pd.read_csv("/nas/asallard/BN/Results/090821/Net_9_actchains.csv")
+bn_chains = pd.read_csv("/nas/asallard/BN/Results/130821/Net_9actchains_forcing.csv")
 eq_chains = pd.read_csv("/nas/asallard/BN/Results/090821/Eqasim_act_chains.csv")
 mz_chains = pd.read_csv("/nas/asallard/BN/Results/090821/MZ_act_chains_2015.csv")
 #old_chains = pd.read_csv("results/data/MZ_act_chains2010.csv")
 
-#bn_chains = bn_chains[(bn_chains["Week_day"] != "Sunday") & (bn_chains["Week_day"] != "Saturday")]
-#mz_chains = mz_chains[(mz_chains["Week_day"] != "Sunday") & (mz_chains["Week_day"] != "Saturday")]
+bn_chains = bn_chains[(bn_chains["Week_day"] != "Sunday") & (bn_chains["Week_day"] != "Saturday")]
+mz_chains = mz_chains[(mz_chains["Week_day"] != "Sunday") & (mz_chains["Week_day"] != "Saturday")]
 #old_chains = old_chains[(old_chains["Week_day"] != "Sunday") & (old_chains["Week_day"] != "Saturday")]
 
 bn_data = bn_chains["Activity_chain"].values.tolist()
@@ -120,7 +120,7 @@ ax.legend(loc = 'lower right')
 plt.xticks(rotation=30)
 #fig.tight_layout()
 plt.plot()
-plt.savefig("/nas/asallard/BN/Results/090821/first_comparison_with_pomegranate.png")
+plt.savefig("/nas/asallard/BN/Results/130821/9act_weekday_forcing.png")
 
 
 

@@ -3,34 +3,34 @@ import pandas as pd
 from tqdm import tqdm
 import matplotlib.pyplot as plt
 
-mz_path = "/nas/asallard/BN/Data/data4bn_2015.csv"
-mz_data = pd.read_csv(mz_path)
+#mz_path = "/nas/asallard/BN/Data/data4bn_2015.csv"
+#mz_data = pd.read_csv(mz_path)
 
-mz_data = mz_data.fillna("stop")
-mz_data = mz_data[mz_data["Age"] >= 6]
-mz_data = mz_data[mz_data["activity10"] == "stop"]
-nb_max_activities = 9
-activities_columns = ["activity"+str(i) for i in range(nb_max_activities + 1)]
+#mz_data = mz_data.fillna("stop")
+#mz_data = mz_data[mz_data["Age"] >= 6]
+#mz_data = mz_data[mz_data["activity10"] == "stop"]
+#nb_max_activities = 9
+#activities_columns = ["activity"+str(i) for i in range(nb_max_activities + 1)]
 
-chains = []
-for i in tqdm(range(len(mz_data)), desc = "MZ data exploration"):
-    row = mz_data.iloc[i][activities_columns]
-    chain = ""
-    for act_nb in range(nb_max_activities + 1):
-        act = row["activity" + str(act_nb)]
-        if act != "stop":
-            chain += act
-            chain += "-"
-        else:
-            break
-    if chain[-1] == "-":
-        chain = chain[:-1]
-    chains.append(chain)
+#chains = []
+#for i in tqdm(range(len(mz_data)), desc = "MZ data exploration"):
+#    row = mz_data.iloc[i][activities_columns]
+#    chain = ""
+#    for act_nb in range(nb_max_activities + 1):
+#        act = row["activity" + str(act_nb)]
+#        if act != "stop":
+#            chain += act
+#            chain += "-"
+#        else:
+#            break
+#    if chain[-1] == "-":
+#        chain = chain[:-1]
+ #   chains.append(chain)
 
-mz_data["Activity_chain"] = chains
-mz_data.drop(columns = activities_columns, inplace = True)
+#mz_data["Activity_chain"] = chains
+#mz_data.drop(columns = activities_columns, inplace = True)
 
-mz_data.to_csv("/nas/asallard/BN/Results/090821/MZ_act_chains_2015.csv", index = False)
+#mz_data.to_csv("/nas/asallard/BN/Results/090821/MZ_act_chains_2015.csv", index = False)
 #exit()
 
 #eqasim_output_path = "/home/aurore/Servers/Switzerland/output_2010_new/"
@@ -74,7 +74,7 @@ mz_data.to_csv("/nas/asallard/BN/Results/090821/MZ_act_chains_2015.csv", index =
 #eq_persons["Activity_chain"] = chains
 #eq_persons = eq_persons[eq_persons["age"] >= 6]
 
-bn_data_path = "/nas/asallard/BN/Results/090821/Net_9act.csv"
+bn_data_path = "/nas/asallard/BN/Results/130821/Net_9act_forcing.csv"
 
 activities_columns = []
 
@@ -103,9 +103,10 @@ for i in tqdm(range(len(bn_data)), desc = "BN data exploration"):
 bn_data["Activity_chain"] = chains
 bn_data.drop(columns = activities_columns, inplace = True)
 
-bn_data.to_csv("/nas/asallard/BN/Results/090821/Net_9_actchains.csv", index = False)
+bn_data.to_csv("/nas/asallard/BN/Results/130821/Net_9actchains_forcing.csv", index = False)
 #eq_persons.to_csv("results/Eqasim_act_chains_2010_2017.csv", index = False)
 #mz_data.to_csv("results/MZ_act_chains.csv", index = False)
+
 
 
 

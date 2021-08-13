@@ -3,6 +3,7 @@ import numpy as np
 import pandas as pd
 import networkx as nx
 import itertools as it
+from collections import Counter
 
 # Copied and slightly modified from https://github.com/jmschrei/pomegranate/blob/master/pomegranate/BayesianNetwork.pyx
 def sample_from_BN(model, nsamples = 1, evidences = [{}], min_prob=0.01,random_state=None):
@@ -70,4 +71,48 @@ def sample_from_BN(model, nsamples = 1, evidences = [{}], min_prob=0.01,random_s
     keys = node_dict.keys()
     return  numpy.array([[r[k] for k in keys ] for i,r in enumerate(samples)])
 
+def impute_dist_from_statpop(model):
+    statpop = pd.read_csv("/nas/asallard/BN/Data/statpop.csv")
+    statpop = statpop[statpop["age"] >= 6]
+
+    statpop["age_class"] = np.digitize(statpop["age"], range(6,100,3))
+    freq = statpop.age_class.value_counts()
+    freq = freq / len(statpop)
+    freq = freq.to_dict()    
+    age_dist = DiscreteDistribution(freq)
+
+    freq = statpop.marital_status.value_counts()
+    freq = freq / len(statpop)
+    freq = freq.to_dict()
+    marital_status_dist = DiscreteDistribution(freq)
+
+    freq = statpop.household_size_class.value_counts()
+    freq = freq / len(statpop)
+    freq = freq.to_dict()
+    hhl_dist = DiscreteDistribution(freq)
+
+    male_nb = len(statpop[statpop["sex"] == 0])
+    female_nb = len(statpop[statpop["sex"] == 1])
+    male = male_nb / len(statpop)
+    female = female_nb / len(statpop)
+    freq = {"Male": male, "Female": female}
+    sex_dist = DiscreteDistribution(freq)
+
+    for s in model.states:
+        if s.name == "age_class":
+            print("Age")
+            s.distribution = age_dist
+        elif s.name == "Sex":
+            print("Gender")
+            s.distribution = sex_dist
+        elif s.name == "Marital_status":
+            print("Marital status")
+            s.distribution = marital_status_dist
+        elif s.name == "household_size_class":
+            print("HHL size")
+            s.distribution = hhl_dist
+
+    model2 = model.copy()
+    return model2
+    
 

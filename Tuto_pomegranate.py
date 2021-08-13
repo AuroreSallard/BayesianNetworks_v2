@@ -112,7 +112,7 @@ X_female = np.sum(W[is_retired]) / np.sum(W)
 S_female = len(df_sampled[df_sampled["Work_time"] == "Houseperson"]) / len(df_sampled)
 print("Houseperson: " + str(X_female) + " vs " + str(S_female))
 
-# Try to modify the distribution of one node, let's say gender - we want to sample only women.
+# Try to modify the distribution of one node, let's say gender - we want to sample only women. Seems to work fine.
 new_gender_dist = DiscreteDistribution({"Female": 1.0, "Male": 0.0})
 
 for s in model.states:
