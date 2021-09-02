@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
-bn_chains = pd.read_csv("/nas/asallard/BN/Results/130821/Net_9actchains_forcing.csv")
+bn_chains = pd.read_csv("/nas/asallard/BN/Results/010921/Net_9actchains_income.csv")
 eq_chains = pd.read_csv("/nas/asallard/BN/Results/090821/Eqasim_act_chains.csv")
 mz_chains = pd.read_csv("/nas/asallard/BN/Results/090821/MZ_act_chains_2015.csv")
 #old_chains = pd.read_csv("results/data/MZ_act_chains2010.csv")
@@ -120,7 +120,7 @@ ax.legend(loc = 'lower right')
 plt.xticks(rotation=30)
 #fig.tight_layout()
 plt.plot()
-plt.savefig("/nas/asallard/BN/Results/130821/9act_weekday_forcing.png")
+plt.savefig("/nas/asallard/BN/Results/010921/9act_income.png")
 
 
 

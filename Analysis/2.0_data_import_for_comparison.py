@@ -74,7 +74,7 @@ import matplotlib.pyplot as plt
 #eq_persons["Activity_chain"] = chains
 #eq_persons = eq_persons[eq_persons["age"] >= 6]
 
-bn_data_path = "/nas/asallard/BN/Results/130821/Net_9act_forcing.csv"
+bn_data_path = "/nas/asallard/BN/Results/010921/Net_9act_income.csv"
 
 activities_columns = []
 
@@ -103,7 +103,7 @@ for i in tqdm(range(len(bn_data)), desc = "BN data exploration"):
 bn_data["Activity_chain"] = chains
 bn_data.drop(columns = activities_columns, inplace = True)
 
-bn_data.to_csv("/nas/asallard/BN/Results/130821/Net_9actchains_forcing.csv", index = False)
+bn_data.to_csv("/nas/asallard/BN/Results/010921/Net_9actchains_income.csv", index = False)
 #eq_persons.to_csv("results/Eqasim_act_chains_2010_2017.csv", index = False)
 #mz_data.to_csv("results/MZ_act_chains.csv", index = False)
 
